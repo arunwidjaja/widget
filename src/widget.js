@@ -56,11 +56,8 @@ class AgenticChatbot {
   }
 }
 
-// Auto-initialize if script is loaded directly
+// Auto-initialize if script is loaded directly and has data attributes
 if (typeof window !== 'undefined') {
-  window.AgenticChatbot = AgenticChatbot;
-  
-  // Auto-init with default config if data attributes are present
   document.addEventListener('DOMContentLoaded', () => {
     const script = document.currentScript || document.querySelector('script[src*="widget.js"]');
     if (script) {

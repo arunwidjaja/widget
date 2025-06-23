@@ -7,7 +7,8 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     library: 'AgenticChatbot',
     libraryTarget: 'umd',
-    globalObject: 'this'
+    globalObject: 'this',
+    libraryExport: 'default'
   },
   module: {
     rules: [
