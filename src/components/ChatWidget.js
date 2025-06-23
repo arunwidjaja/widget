@@ -292,10 +292,10 @@ export class ChatWidget {
           </svg>
           <span style="font-weight: 600;">Searching the web...</span>
         </div>
-        <div>${message.content}</div>
+        <div>${this.convertMarkdownLinks(message.content)}</div>
       `;
     } else {
-      contentElement.textContent = message.content;
+      contentElement.innerHTML = this.convertMarkdownLinks(message.content);
     }
 
     const timeElement = document.createElement('div');
@@ -311,6 +311,11 @@ export class ChatWidget {
     
     this.messageContainer.appendChild(messageElement);
     this.scrollToBottom();
+  }
+
+  convertMarkdownLinks(text) {
+    // Convert markdown-style links [text](url) to HTML links
+    return text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">$1</a>');
   }
 
   scrollToBottom() {

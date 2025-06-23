@@ -1,8 +1,13 @@
 // Environment variables are loaded by dotenv-webpack plugin
+// For CDN distribution, keys can be hardcoded here
 export const config = {
-    // API Keys
+    // API Keys - can be set via environment variables or hardcoded for CDN
     openaiKey: process.env.OPENAI_API_KEY || null,
     serperKey: process.env.SERPER_API_KEY || null,
+    
+    // For CDN distribution, you can hardcode your keys here:
+    // openaiKey: 'sk-your-actual-openai-key-here',
+    // serperKey: 'your-actual-serper-key-here',
     
     // Widget Configuration
     defaultConfig: {

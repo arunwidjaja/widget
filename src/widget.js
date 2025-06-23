@@ -14,14 +14,14 @@ class AgenticChatbot {
     
     this.agentSystem = new AgentSystem();
     
-    // Register web search agent
+    // Register web search agent with embedded key
     const webSearchAgent = new WebSearchAgent();
     if (config.serperKey) {
       webSearchAgent.setApiKey(config.serperKey);
     }
     this.agentSystem.registerAgent('web-search', webSearchAgent);
     
-    // Register LLM agent
+    // Register LLM agent with embedded key
     const llmAgent = new LLMAgent(config.openaiKey);
     this.agentSystem.registerAgent('llm', llmAgent);
     
@@ -44,7 +44,7 @@ class AgenticChatbot {
     console.log(`Serper API: ${status.serper ? '✅' : '❌'}`);
     
     if (!status.any) {
-      console.warn('⚠️ No API keys configured. Add your keys to .env file for full functionality.');
+      console.warn('⚠️ No API keys configured. Widget will have limited functionality.');
     }
   }
 

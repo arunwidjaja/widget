@@ -315,6 +315,59 @@ chatbot.agentSystem.registerAgent('booking', new BookingAgent());</code></pre>
             </div>
         </div>
 
+        <div class="demo-section">
+            <h2>🔍 CDN Distribution Setup</h2>
+            <p>For client distribution, the widget will be hosted on CDN with embedded API keys:</p>
+            
+            <div class="configuration">
+                <h4>Client Integration (Simple)</h4>
+                <ul>
+                    <li>No API keys needed from clients</li>
+                    <li>Single script tag integration</li>
+                    <li>Instant setup with no configuration</li>
+                </ul>
+                <div class="code-example">
+                    <pre><code>&lt;!-- Simple client integration --&gt;
+&lt;script src="https://your-cdn.com/widget.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+const chatbot = new AgenticChatbot({
+    title: 'Customer Support',
+    welcomeMessage: 'Hello! How can I help you today?',
+    primaryColor: '#007bff'
+});
+chatbot.init();
+&lt;/script&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="configuration">
+                <h4>Advanced Configuration</h4>
+                <div class="code-example">
+                    <pre><code>const chatbot = new AgenticChatbot({
+    // Basic settings
+    title: 'Your Assistant Name',
+    welcomeMessage: 'Custom welcome message',
+    primaryColor: '#your-brand-color',
+    position: 'bottom-right', // or 'bottom-left', 'top-right', 'top-left'
+    
+    // Advanced settings
+    autoOpen: false, // Don't auto-open on page load
+    showTimestamp: true // Show message timestamps
+});</code></pre>
+                </div>
+            </div>
+
+            <div class="configuration">
+                <h4>Data Attributes (Alternative)</h4>
+                <div class="code-example">
+                    <pre><code>&lt;script src="https://your-cdn.com/widget.js" 
+        data-title="Customer Support"
+        data-welcome-message="Hello! How can I help?"
+        data-primary-color="#007bff"&gt;&lt;/script&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+
         <div class="footer">
             <p>Agentic Chatbot Widget Demo • Built with modern JavaScript and web technologies</p>
         </div>
