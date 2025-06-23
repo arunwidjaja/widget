@@ -1,4 +1,5 @@
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/widget.js',
@@ -17,5 +18,11 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       }
     ]
-  }
+  },
+  plugins: [
+    new Dotenv({
+      systemvars: true, // Load all system environment variables as well
+      safe: true // Load '.env.example' to verify the '.env' variables are all set
+    })
+  ]
 }; 

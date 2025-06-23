@@ -1,13 +1,21 @@
+import { SearchDecisionAgent } from './SearchDecisionAgent';
+
 export class AgentSystem {
   constructor() {
     this.agents = new Map();
     this.defaultAgent = null;
+    this.searchDecisionAgent = null;
   }
 
   registerAgent(name, agent) {
     this.agents.set(name, agent);
     if (!this.defaultAgent) {
       this.defaultAgent = agent;
+    }
+    
+    // Initialize search decision agent when LLM is registered
+    if (name === 'llm' && !this.searchDecisionAgent) {
+      this.searchDecisionAgent = new SearchDecisionAgent(agent);
     }
   }
 
@@ -19,48 +27,58 @@ export class AgentSystem {
   }
 
   async processMessage(message) {
-    // Simple keyword-based routing
-    const lowerMessage = message.toLowerCase();
-    
-    // Check if message requires web search
-    const searchKeywords = [
-      'search', 'find', 'look up', 'what is', 'who is', 'when', 'where', 'how to',
-      'latest', 'news', 'weather', 'price', 'cost', 'definition', 'meaning',
-      'current', 'recent', 'today', 'yesterday', 'tomorrow'
-    ];
+    // Use intelligent decision to determine if web search is needed
+    const needsWebSearch = await this.shouldUseWebSearch(message);
 
-    const needsSearch = searchKeywords.some(keyword => 
-      lowerMessage.includes(keyword)
-    ) || 
-    // Also search for questions that might need current information
-    (lowerMessage.includes('?') && (
-      lowerMessage.includes('what') || 
-      lowerMessage.includes('when') || 
-      lowerMessage.includes('where') || 
-      lowerMessage.includes('how') || 
-      lowerMessage.includes('why') ||
-      lowerMessage.includes('current') ||
-      lowerMessage.includes('latest')
-    ));
-
-    if (needsSearch && this.agents.has('web-search')) {
+    if (needsWebSearch && this.agents.has('web-search')) {
       const searchAgent = this.agents.get('web-search');
       return await searchAgent.process(message);
     }
 
-    // Default response for general questions
-    return this.generateDefaultResponse(message);
+    // Use LLM for general responses if available
+    if (this.agents.has('llm')) {
+      const llmAgent = this.agents.get('llm');
+      const llmResponse = await llmAgent.process(message);
+      if (llmResponse) {
+        return llmResponse;
+      }
+    }
+
+    // Fallback response if no LLM is configured
+    return this.generateFallbackResponse(message);
   }
 
-  generateDefaultResponse(message) {
-    const responses = [
-      "I'd be happy to help you with that! For questions that might need current information, I can search the web for you. Just ask me to search for something specific.",
-      "That's an interesting question! If you need the latest information, I can search the web. Try asking me something like 'search for current weather' or 'find latest news about...'",
-      "I can help you with general questions, and I also have the ability to search the web for current information. What would you like to know?",
-      "For questions that require up-to-date information, I can perform web searches. Just let me know what you'd like me to search for!"
-    ];
+  async shouldUseWebSearch(message) {
+    if (this.searchDecisionAgent) {
+      return await this.searchDecisionAgent.shouldUseWebSearch(message);
+    }
     
-    return responses[Math.floor(Math.random() * responses.length)];
+    // Fallback to simple keyword detection if no decision agent
+    return this.simpleKeywordDetection(message);
+  }
+
+  simpleKeywordDetection(message) {
+    const lowerMessage = message.toLowerCase();
+    
+    const currentInfoKeywords = [
+      'latest', 'current', 'recent', 'today', 'yesterday', 'tomorrow',
+      'now', 'this week', 'this month', 'this year',
+      'breaking', 'just happened', 'latest news', 'current events',
+      'weather', 'temperature', 'forecast',
+      'price', 'cost', 'stock price', 'cryptocurrency',
+      'election results', 'sports scores', 'live'
+    ];
+
+    const explicitSearchKeywords = [
+      'search for', 'search', 'find', 'look up', 'google', 'search the web'
+    ];
+
+    return currentInfoKeywords.some(keyword => lowerMessage.includes(keyword)) ||
+           explicitSearchKeywords.some(keyword => lowerMessage.includes(keyword));
+  }
+
+  generateFallbackResponse(message) {
+    return "I'd be happy to help you with that! For questions that might need current information, I can search the web for you. Just ask me to search for something specific.";
   }
 
   getAgent(name) {

@@ -2,19 +2,28 @@ import './styles.css';
 import { ChatWidget } from './components/ChatWidget';
 import { AgentSystem } from './agents/AgentSystem';
 import { WebSearchAgent } from './agents/WebSearchAgent';
+import { LLMAgent } from './agents/LLMAgent';
+import { config, isConfigured } from './config';
 
 class AgenticChatbot {
-  constructor(config = {}) {
+  constructor(userConfig = {}) {
     this.config = {
-      position: 'bottom-right',
-      title: 'AI Assistant',
-      welcomeMessage: 'Hello! I can help you with questions and web searches. How can I assist you today?',
-      primaryColor: '#007bff',
-      ...config
+      ...config.defaultConfig,
+      ...userConfig
     };
     
     this.agentSystem = new AgentSystem();
-    this.agentSystem.registerAgent('web-search', new WebSearchAgent());
+    
+    // Register web search agent
+    const webSearchAgent = new WebSearchAgent();
+    if (config.serperKey) {
+      webSearchAgent.setApiKey(config.serperKey);
+    }
+    this.agentSystem.registerAgent('web-search', webSearchAgent);
+    
+    // Register LLM agent
+    const llmAgent = new LLMAgent(config.openaiKey);
+    this.agentSystem.registerAgent('llm', llmAgent);
     
     this.widget = null;
   }
@@ -27,6 +36,16 @@ class AgenticChatbot {
 
     this.widget = new ChatWidget(this.config, this.agentSystem);
     this.widget.init();
+    
+    // Log configuration status
+    const status = isConfigured();
+    console.log('🤖 Agentic Chatbot Widget Initialized');
+    console.log(`OpenAI API: ${status.openai ? '✅' : '❌'}`);
+    console.log(`Serper API: ${status.serper ? '✅' : '❌'}`);
+    
+    if (!status.any) {
+      console.warn('⚠️ No API keys configured. Add your keys to .env file for full functionality.');
+    }
   }
 
   destroy() {
@@ -53,6 +72,11 @@ class AgenticChatbot {
     if (this.widget) {
       return this.widget.sendMessage(message);
     }
+  }
+
+  // Configuration status methods
+  getConfigStatus() {
+    return isConfigured();
   }
 }
 

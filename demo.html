@@ -254,30 +254,46 @@ chatbot.init();
         </div>
 
         <div class="demo-section">
-            <h2>🔍 Web Search Setup</h2>
-            <p>To enable real web search functionality (currently using simulated results for demo):</p>
+            <h2>🔍 API Setup</h2>
+            <p>To enable real AI responses and web search functionality:</p>
             
             <div class="configuration">
-                <h4>Option 1: SerpAPI (Recommended for demo)</h4>
+                <h4>Environment Variables Setup</h4>
                 <ul>
-                    <li>Sign up for free at <a href="https://serpapi.com/" target="_blank">serpapi.com</a></li>
-                    <li>Get your API key from the dashboard</li>
-                    <li>Add this code after initialization:</li>
+                    <li>Copy <code>env.example</code> to <code>.env</code></li>
+                    <li>Add your API keys to the <code>.env</code> file</li>
+                    <li>The widget will automatically load the keys</li>
                 </ul>
                 <div class="code-example">
-                    <pre><code>// Enable real web search
-chatbot.agentSystem.getAgent('web-search').setApiKey('your-serpapi-key');</code></pre>
+                    <pre><code># .env file
+OPENAI_API_KEY=your_openai_api_key_here
+SERPER_API_KEY=your_serper_api_key_here</code></pre>
                 </div>
             </div>
 
             <div class="configuration">
-                <h4>Option 2: Google Custom Search API</h4>
+                <h4>API Key Sources</h4>
                 <ul>
-                    <li>Create a project in Google Cloud Console</li>
-                    <li>Enable Custom Search API</li>
-                    <li>Create API credentials</li>
-                    <li>Set up Custom Search Engine</li>
+                    <li><strong>OpenAI API:</strong> Get your key from <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI Platform</a></li>
+                    <li><strong>Serper API:</strong> Get your key from <a href="https://serper.dev/" target="_blank">serper.dev</a></li>
                 </ul>
+            </div>
+
+            <div class="configuration">
+                <h4>Simple Integration</h4>
+                <div class="code-example">
+                    <pre><code>&lt;script src="dist/widget.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+const chatbot = new AgenticChatbot({
+    title: 'My AI Assistant',
+    welcomeMessage: 'Hello! How can I help you today?',
+    primaryColor: '#007bff'
+});
+
+chatbot.init();
+&lt;/script&gt;</code></pre>
+                </div>
+                <p><em>No need to manually pass API keys - they're loaded automatically from environment variables!</em></p>
             </div>
         </div>
 
@@ -334,7 +350,8 @@ chatbot.agentSystem.registerAgent('booking', new BookingAgent());</code></pre>
         console.log('   - "What is the current weather?"');
         console.log('   - "Search for latest news about AI"');
         console.log('   - "Find information about renewable energy"');
-        console.log('🔧 To enable real web search, get an API key from serpapi.com');
+        console.log('🔧 API keys are loaded from .env file automatically');
+        console.log('🔧 To enable real functionality, add your API keys to the configuration');
     </script>
 </body>
 </html> 
