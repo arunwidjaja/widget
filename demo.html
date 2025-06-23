@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic Chatbot Widget Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .demo-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .demo-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .demo-section p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .feature {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid #007bff;
+        }
+        
+        .feature h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .feature p {
+            color: #666;
+            margin: 0;
+        }
+        
+        .code-example {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            color: #333;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        
+        .test-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .test-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+        
+        .test-btn:hover {
+            background: #0056b3;
+        }
+        
+        .configuration {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .configuration h4 {
+            color: #1976d2;
+            margin-bottom: 15px;
+        }
+        
+        .configuration ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .configuration li {
+            margin-bottom: 8px;
+            color: #424242;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Agentic Chatbot Widget</h1>
+            <p>A powerful, customizable chatbot widget with web search capabilities for your website</p>
+        </div>
+
+        <div class="demo-section">
+            <h2>✨ Features</h2>
+            <div class="features">
+                <div class="feature">
+                    <h3>🌐 Web Search</h3>
+                    <p>Automatically searches the web for current information when needed. Perfect for questions about recent events, weather, prices, and more.</p>
+                </div>
+                <div class="feature">
+                    <h3>🎨 Customizable</h3>
+                    <p>Easy to customize colors, position, title, and welcome message. Adapts to your brand and website design.</p>
+                </div>
+                <div class="feature">
+                    <h3>📱 Responsive</h3>
+                    <p>Works perfectly on desktop, tablet, and mobile devices. Automatically adjusts to different screen sizes.</p>
+                </div>
+                <div class="feature">
+                    <h3>🔌 Easy Integration</h3>
+                    <p>Simple one-line integration. Just add a script tag to your website and you're ready to go.</p>
+                </div>
+                <div class="feature">
+                    <h3>⚡ Fast & Lightweight</h3>
+                    <p>Optimized for performance with minimal impact on your website's loading speed.</p>
+                </div>
+                <div class="feature">
+                    <h3>🔧 Extensible</h3>
+                    <p>Modular architecture allows you to easily add new agents for booking, shopping, and other tasks.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🧪 Try It Out</h2>
+            <p>Test the chatbot with these example questions. The chatbot will automatically detect when web search is needed.</p>
+            
+            <div class="test-buttons">
+                <button class="test-btn" onclick="testSearch('What is the current weather in New York?')">Weather Search</button>
+                <button class="test-btn" onclick="testSearch('Search for latest news about AI')">News Search</button>
+                <button class="test-btn" onclick="testSearch('What is the current price of Bitcoin?')">Price Search</button>
+                <button class="test-btn" onclick="testSearch('Find information about renewable energy')">Information Search</button>
+                <button class="test-btn" onclick="testSearch('Hello, how are you?')">General Chat</button>
+            </div>
+
+            <div class="configuration">
+                <h4>💡 Pro Tips:</h4>
+                <ul>
+                    <li>Try asking questions that start with "What is", "Search for", "Find", or "How to"</li>
+                    <li>The chatbot automatically detects when web search is needed</li>
+                    <li>You can also ask general questions for a friendly conversation</li>
+                    <li>Click the minimize button to collapse the chat window</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🚀 Quick Integration</h2>
+            <p>Add the chatbot to your website with just a few lines of code:</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;!-- Add this to your HTML head or before closing body tag --&gt;
+&lt;script src="dist/widget.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+// Initialize the chatbot
+const chatbot = new AgenticChatbot({
+    title: 'My AI Assistant',
+    welcomeMessage: 'Hello! How can I help you today?',
+    primaryColor: '#007bff',
+    position: 'bottom-right'
+});
+
+chatbot.init();
+&lt;/script&gt;</code></pre>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>⚙️ Configuration Options</h2>
+            <p>Customize the chatbot to match your brand and requirements:</p>
+            
+            <div class="code-example">
+                <pre><code>const chatbot = new AgenticChatbot({
+    // Basic settings
+    title: 'Your Assistant Name',
+    welcomeMessage: 'Custom welcome message',
+    primaryColor: '#your-brand-color',
+    position: 'bottom-right', // or 'bottom-left', 'top-right', 'top-left'
+    
+    // Advanced settings
+    apiKey: 'your-search-api-key', // For real web search
+    maxResults: 5, // Number of search results to show
+    autoOpen: false, // Don't auto-open on page load
+    showTimestamp: true // Show message timestamps
+});</code></pre>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🔍 Web Search Setup</h2>
+            <p>To enable real web search functionality (currently using simulated results for demo):</p>
+            
+            <div class="configuration">
+                <h4>Option 1: SerpAPI (Recommended for demo)</h4>
+                <ul>
+                    <li>Sign up for free at <a href="https://serpapi.com/" target="_blank">serpapi.com</a></li>
+                    <li>Get your API key from the dashboard</li>
+                    <li>Add this code after initialization:</li>
+                </ul>
+                <div class="code-example">
+                    <pre><code>// Enable real web search
+chatbot.agentSystem.getAgent('web-search').setApiKey('your-serpapi-key');</code></pre>
+                </div>
+            </div>
+
+            <div class="configuration">
+                <h4>Option 2: Google Custom Search API</h4>
+                <ul>
+                    <li>Create a project in Google Cloud Console</li>
+                    <li>Enable Custom Search API</li>
+                    <li>Create API credentials</li>
+                    <li>Set up Custom Search Engine</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🔧 Extending the System</h2>
+            <p>The modular architecture makes it easy to add new capabilities:</p>
+            
+            <div class="code-example">
+                <pre><code>// Example: Adding a booking agent
+class BookingAgent {
+    async process(message) {
+        // Handle booking requests
+        return 'I can help you book tickets, appointments, etc.';
+    }
+}
+
+// Register the new agent
+chatbot.agentSystem.registerAgent('booking', new BookingAgent());</code></pre>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Agentic Chatbot Widget Demo • Built with modern JavaScript and web technologies</p>
+        </div>
+    </div>
+
+    <!-- Load the chatbot widget -->
+    <script src="dist/widget.js"></script>
+    <script>
+        // Initialize the chatbot with demo configuration
+        const chatbot = new AgenticChatbot({
+            title: 'AI Assistant Demo',
+            welcomeMessage: 'Hello! I\'m your AI assistant. I can help you with questions and search the web for current information. Try asking me something!',
+            primaryColor: '#667eea',
+            position: 'bottom-right'
+        });
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            chatbot.init();
+        });
+
+        // Test function for demo buttons
+        function testSearch(message) {
+            if (chatbot && chatbot.widget) {
+                chatbot.widget.sendMessage(message);
+                chatbot.show();
+            }
+        }
+
+        // Add some helpful console messages
+        console.log('🤖 Agentic Chatbot Widget Demo Loaded!');
+        console.log('💡 Try asking questions like:');
+        console.log('   - "What is the current weather?"');
+        console.log('   - "Search for latest news about AI"');
+        console.log('   - "Find information about renewable energy"');
+        console.log('🔧 To enable real web search, get an API key from serpapi.com');
+    </script>
+</body>
+</html> 

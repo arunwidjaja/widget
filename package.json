@@ -1,0 +1,29 @@
+{
+  "name": "agentic-chatbot-widget",
+  "version": "1.0.0",
+  "description": "A customizable chatbot widget with agentic capabilities for websites",
+  "main": "dist/widget.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch",
+    "serve": "http-server . -p 8080 -c-1"
+  },
+  "keywords": [
+    "chatbot",
+    "widget",
+    "agent",
+    "web-search"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "css-loader": "^7.1.2",
+    "http-server": "^14.1.1",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.0"
+  },
+  "dependencies": {
+    "axios": "^1.4.0"
+  }
+}
