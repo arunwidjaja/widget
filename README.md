@@ -179,7 +179,8 @@ widget/
 ├── src/
 │   ├── components/
 │   │   └── ChatWidget.js      # Main UI component
-│   │   └── AgentSystem.js     # Agent management system
+│   ├── agents/
+│   │   ├── AgentSystem.js     # Agent management system
 │   │   └── WebSearchAgent.js  # Web search functionality
 │   ├── styles.css             # Widget styles
 │   └── widget.js              # Main entry point
@@ -190,6 +191,59 @@ widget/
 ├── webpack.config.js          # Build configuration
 └── README.md                  # This file
 ```
+
+## 🧠 Core Logic Files
+
+The main core logic of the widget is distributed across several key files:
+
+### **Primary Entry Point**
+**`src/widget.js`** - Main entry point that:
+- Imports all components and agents
+- Defines the `AgenticChatbot` class
+- Handles configuration and initialization
+- Exports the widget for use
+
+### **Core Logic Files**
+
+#### **1. `src/components/ChatWidget.js`** (Most Important)
+Contains the **main UI and interaction logic**:
+- Creates the floating chat interface
+- Handles user input and message display
+- Manages chat state and conversation flow
+- Controls show/hide/minimize functionality
+- Renders messages and typing indicators
+- Handles all user interactions
+
+#### **2. `src/agents/AgentSystem.js`**
+Contains the **intelligence and routing logic**:
+- Determines which agent should handle each message
+- Routes messages to appropriate agents (web search vs general chat)
+- Manages the agent registry
+- Provides fallback responses
+
+#### **3. `src/agents/WebSearchAgent.js`**
+Contains the **web search functionality**:
+- Extracts search queries from user messages
+- Performs web searches (real or simulated)
+- Formats search results
+- Handles search API integration
+
+### **File Hierarchy by Importance**
+```
+src/
+├── widget.js              # 🎯 Entry point & main class
+├── components/
+│   └── ChatWidget.js      # 🔥 CORE UI LOGIC (Most important)
+└── agents/
+    ├── AgentSystem.js     # 🧠 Intelligence & routing
+    └── WebSearchAgent.js  # 🌐 Search functionality
+```
+
+### **Modification Guide**
+- **UI/Interface changes**: Edit `ChatWidget.js`
+- **Behavior/Intelligence changes**: Edit `AgentSystem.js` 
+- **Search functionality**: Edit `WebSearchAgent.js`
+- **Configuration/Setup**: Edit `widget.js`
 
 ## 🛠️ Development
 
